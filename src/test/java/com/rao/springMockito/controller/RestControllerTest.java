@@ -1,5 +1,6 @@
 package com.rao.springMockito.controller;
 
+import com.rao.springMockito.data.ItemRepository;
 import com.rao.springMockito.pojo.Item;
 import com.rao.springMockito.service.BusinessService;
 import org.junit.Test;
@@ -13,6 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.Arrays;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -51,6 +54,23 @@ public class RestControllerTest {
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"id\":1,\"name\":\"Pencil\",\"price\":10,\"quantity\":100}")).andReturn();
+
+
+    }
+
+
+    @Test
+    public void dummyItem_service_fetchAll() throws Exception {
+
+        when(businessService.retreiveAll()).thenReturn(Arrays.asList(new Item(1,"Pencil",10,100)));
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/item-fetch-all")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(content().json("[{\"id\":1,\"name\":\"Pencil\",\"price\":10,\"quantity\":100}]")).andReturn();
 
 
     }
