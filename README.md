@@ -1,6 +1,6 @@
 ## Mockito embeded with Spring.
 
-This application uses mockito to unit the application.
+This application uses mockito to unit test the application. Mockito is used for testing the layers.
 
 
 ### This application has these libraries.
